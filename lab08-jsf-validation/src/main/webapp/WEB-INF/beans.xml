@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    beans.xml: kích hoạt CDI (Contexts and Dependency Injection) cho ứng dụng.
+    bean-discovery-mode="all" → Weld sẽ quét toàn bộ class trong project.
+-->
+<beans xmlns="https://jakarta.ee/xml/ns/jakartaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/beans_4_0.xsd"
+       version="4.0"
+       bean-discovery-mode="all">
+</beans>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets">
+<!--
+    index.xhtml - Trang chủ của ứng dụng JSF (Bài 1).
+    Kế thừa layout template dùng chung (Bài 11).
+-->
+<ui:composition template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Trang chủ</ui:define>
+
+    <ui:define name="content">
+
+        <!-- Hero banner -->
+        <div class="hero">
+            <h1>🎓 Lab 8 – JSF Validation &amp; Message</h1>
+            <p>Công nghệ Java IT3242 | Chuyển form sang Jakarta Server Faces, Bean Validation, FacesMessage</p>
+        </div>
+
+        <!-- Thông báo toàn cục (sau login redirect) -->
+        <h:messages globalOnly="true" styleClass="faces-messages" infoClass="msg-success"
+                    warnClass="msg-warning" errorClass="msg-error" showDetail="true"/>
+
+        <!-- Feature Cards -->
+        <div class="feature-grid">
+            <h:link outcome="/sinhvien-form" styleClass="feature-card">
+                <div class="feature-icon">👤</div>
+                <div class="feature-title">Form Sinh Viên</div>
+                <div class="feature-desc">Thêm sinh viên, validate required/@Email/@Size, hiển thị lỗi từng trường.</div>
+            </h:link>
+
+            <h:link outcome="/sinhvien-list" styleClass="feature-card">
+                <div class="feature-icon">📋</div>
+                <div class="feature-title">Danh Sách Sinh Viên</div>
+                <div class="feature-desc">h:dataTable, xóa, sửa sinh viên và tìm kiếm theo từ khóa.</div>
+            </h:link>
+
+            <h:link outcome="/sach-form" styleClass="feature-card">
+                <div class="feature-icon">📚</div>
+                <div class="feature-title">Form Sách</div>
+                <div class="feature-desc">Validate tên sách, tác giả, năm xuất bản hợp lệ (1000–2100).</div>
+            </h:link>
+
+            <h:link outcome="/sanpham-form" styleClass="feature-card">
+                <div class="feature-icon">🛒</div>
+                <div class="feature-title">Form Sản Phẩm</div>
+                <div class="feature-desc">Validate tên không rỗng, giá &gt; 0, số lượng &gt;= 0.</div>
+            </h:link>
+
+            <h:link outcome="/login" styleClass="feature-card">
+                <div class="feature-icon">🔐</div>
+                <div class="feature-title">Đăng Nhập JSF</div>
+                <div class="feature-desc">LoginBean, xử lý đúng/sai tài khoản bằng FacesMessage.</div>
+            </h:link>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <div class="feature-title">Công nghệ sử dụng</div>
+                <div class="feature-desc">
+                    Jakarta Faces 4.0 · Weld CDI 5.1 · Hibernate Validator 8.0 · Tomcat 10.x
+                </div>
+            </div>
+        </div>
+
+        <!-- Thông tin tài khoản demo -->
+        <div class="card">
+            <div class="card-title">ℹ️ Thông tin demo</div>
+            <p style="color: var(--text-muted); font-size:0.9rem;">
+                Tài khoản đăng nhập demo:
+                <strong>username: admin</strong> |
+                <strong>password: 123456</strong>
+            </p>
+        </div>
+
+    </ui:define>
+</ui:composition>
+</html>

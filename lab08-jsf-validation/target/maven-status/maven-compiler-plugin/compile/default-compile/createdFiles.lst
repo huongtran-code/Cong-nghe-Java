@@ -1,0 +1,10 @@
+vn\edu\eaut\lab8\bean\SachBean.class
+vn\edu\eaut\lab8\repository\SachRepository.class
+vn\edu\eaut\lab8\model\Sach.class
+vn\edu\eaut\lab8\bean\LoginBean.class
+vn\edu\eaut\lab8\model\SinhVien.class
+vn\edu\eaut\lab8\bean\SinhVienBean.class
+vn\edu\eaut\lab8\repository\SanPhamRepository.class
+vn\edu\eaut\lab8\repository\SinhVienRepository.class
+vn\edu\eaut\lab8\model\SanPham.class
+vn\edu\eaut\lab8\bean\SanPhamBean.class

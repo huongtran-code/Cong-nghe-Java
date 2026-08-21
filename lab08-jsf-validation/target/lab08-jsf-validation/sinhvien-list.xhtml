@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core">
+<!--
+    sinhvien-list.xhtml - Danh sách sinh viên (Bài 5, 9, 10).
+
+    Bài 5:  h:dataTable hiển thị danh sách, nút Xóa gọi delete(sv.id)
+    Bài 9:  nút Sửa gọi edit(sv.id) → điều hướng đến form sinhvien-form.xhtml
+    Bài 10: ô tìm kiếm keyword, lọc danh sách theo họ tên/lớp/mã SV
+-->
+<ui:composition template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Danh sách sinh viên</ui:define>
+
+    <ui:define name="content">
+
+        <div class="page-header">
+            <h1>📋 Danh sách sinh viên</h1>
+            <p>Xem, tìm kiếm, sửa và xóa sinh viên. Dữ liệu lưu trong bộ nhớ (in-memory).</p>
+        </div>
+
+        <!-- Thông báo toàn cục (xóa/cập nhật thành công) -->
+        <h:messages globalOnly="true" styleClass="faces-messages"
+                    infoClass="msg-success" warnClass="msg-warning" errorClass="msg-error"
+                    showDetail="true"/>
+
+        <div class="card">
+            <!--
+                Bài 10: Tìm kiếm sinh viên theo từ khóa.
+                Một form riêng cho search để không ảnh hưởng đến nút Xóa/Sửa trong bảng.
+            -->
+            <h:form id="searchForm">
+                <div class="search-bar">
+                    <h:inputText id="keyword"
+                                 value="#{sinhVienBean.keyword}"
+                                 placeholder="🔍 Tìm theo họ tên, mã SV hoặc lớp..."
+                                 style="flex:1"/>
+                    <h:commandButton value="Tìm kiếm" styleClass="btn btn-primary"/>
+                    <h:commandButton value="Xóa bộ lọc" immediate="true"
+                                     action="#{sinhVienBean.setKeyword('')}"
+                                     styleClass="btn btn-secondary"/>
+                </div>
+            </h:form>
+
+            <!-- Bảng danh sách sinh viên -->
+            <h:form id="listForm">
+                <h:dataTable value="#{sinhVienBean.dsSinhVienFiltered}"
+                             var="sv"
+                             styleClass="data-table"
+                             headerClass="header-row"
+                             rowClasses="odd-row,even-row"
+                             emptyDataMessage="Không tìm thấy sinh viên nào.">
+
+                    <h:column>
+                        <f:facet name="header">ID</f:facet>
+                        <span class="badge">#{sv.id}</span>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Mã sinh viên</f:facet>
+                        #{sv.maSinhVien}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Họ và tên</f:facet>
+                        <strong>#{sv.hoTen}</strong>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Email</f:facet>
+                        #{sv.email}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Lớp</f:facet>
+                        #{sv.lop}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Thao tác</f:facet>
+                        <!-- Bài 9: Nút Sửa -->
+                        <h:commandButton value="✏️ Sửa"
+                                         action="#{sinhVienBean.edit(sv.id)}"
+                                         styleClass="btn btn-warning"
+                                         style="margin-right:6px"/>
+                        <!-- Bài 5: Nút Xóa -->
+                        <h:commandButton value="🗑 Xóa"
+                                         action="#{sinhVienBean.delete(sv.id)}"
+                                         styleClass="btn btn-danger"
+                                         onclick="return confirm('Xóa sinh viên #{sv.hoTen}?')"/>
+                    </h:column>
+
+                </h:dataTable>
+
+                <!-- Thông báo khi bảng rỗng -->
+                <h:panelGroup rendered="#{empty sinhVienBean.dsSinhVienFiltered}" layout="block">
+                    <p style="color: var(--text-muted); text-align:center; padding: 32px;">
+                        😕 Không tìm thấy sinh viên nào phù hợp với từ khóa "#{sinhVienBean.keyword}".
+                    </p>
+                </h:panelGroup>
+
+            </h:form>
+        </div>
+
+        <p>
+            <h:link outcome="/sinhvien-form" value="➕ Thêm sinh viên mới" styleClass="btn btn-primary" style="display:inline-flex"/>
+        </p>
+
+    </ui:define>
+</ui:composition>
+</html>

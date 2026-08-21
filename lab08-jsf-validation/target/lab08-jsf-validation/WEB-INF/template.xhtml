@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets">
+<!--
+    template.xhtml - Layout dùng chung cho toàn bộ ứng dụng (Bài 11).
+    Dùng ui:composition + ui:define để các trang con nhúng nội dung vào.
+
+    Cách dùng ở trang con:
+        <ui:composition template="/WEB-INF/template.xhtml">
+            <ui:define name="title">Tên trang</ui:define>
+            <ui:define name="content">
+                ... nội dung trang ...
+            </ui:define>
+        </ui:composition>
+-->
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Lab 8 - <ui:insert name="title">Trang</ui:insert></title>
+    <h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+<h:body>
+
+    <!-- ===== HEADER dùng chung ===== -->
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="logo">
+                <span class="logo-icon">🎓</span>
+                <span class="logo-text">Lab 8 – JSF &amp; Validation</span>
+            </div>
+            <nav class="nav-links">
+                <h:link outcome="/index"          value="🏠 Trang chủ"    styleClass="nav-link"/>
+                <h:link outcome="/sinhvien-form"  value="👤 Thêm sinh viên" styleClass="nav-link"/>
+                <h:link outcome="/sinhvien-list"  value="📋 DS sinh viên"  styleClass="nav-link"/>
+                <h:link outcome="/sach-form"      value="📚 Thêm sách"    styleClass="nav-link"/>
+                <h:link outcome="/sanpham-form"   value="🛒 Thêm sản phẩm" styleClass="nav-link"/>
+                <h:link outcome="/login"          value="🔐 Đăng nhập"    styleClass="nav-link"/>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== NỘI DUNG TRANG CON ===== -->
+    <main class="main-content">
+        <ui:insert name="content">
+            <!-- Trang con sẽ định nghĩa nội dung ở đây -->
+        </ui:insert>
+    </main>
+
+    <!-- ===== FOOTER dùng chung ===== -->
+    <footer class="site-footer">
+        <p>© 2024 Công nghệ Java - IT3242 | Lab 8 – Chuyển form sang JSF, Validation &amp; Message</p>
+        <p>Jakarta Faces 4.0 · Weld CDI 5.1 · Hibernate Validator 8.0 · Tomcat 10.x</p>
+    </footer>
+
+</h:body>
+</html>

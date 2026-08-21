@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>vn.edu.eaut</groupId>
+    <artifactId>lab08-jsf-validation</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <!-- Jakarta Faces (JSF) implementation - Mojarra 4.x -->
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>jakarta.faces</artifactId>
+            <version>4.0.7</version>
+        </dependency>
+
+        <!-- Weld CDI for Tomcat (Managed Beans / @Named / @SessionScoped) -->
+        <dependency>
+            <groupId>org.jboss.weld.servlet</groupId>
+            <artifactId>weld-servlet-shaded</artifactId>
+            <version>5.1.2.Final</version>
+        </dependency>
+
+        <!-- Hibernate Validator (Bean Validation @NotBlank, @Email, @Size...) -->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>8.0.1.Final</version>
+        </dependency>
+
+        <!-- Expression Language (required by Hibernate Validator) -->
+        <dependency>
+            <groupId>org.glassfish.expressly</groupId>
+            <artifactId>expressly</artifactId>
+            <version>5.0.0</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>lab08-jsf-validation</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.4.0</version>
+            </plugin>
+
+            <!--
+                Cargo Plugin: chạy ứng dụng bằng lệnh  mvn cargo:run
+                Dùng Tomcat 10.1 nhúng (embedded) → không cần cài Tomcat riêng.
+                Truy cập: http://localhost:8080/lab08-jsf-validation/
+            -->
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven3-plugin</artifactId>
+                <version>1.10.13</version>
+                <configuration>
+                    <container>
+                        <!-- Tomcat 10.1 hỗ trợ Jakarta EE 10 / jakarta.* namespace -->
+                        <containerId>tomcat10x</containerId>
+                        <type>embedded</type>
+                    </container>
+                    <configuration>
+                        <properties>
+                            <!-- Port mặc định 8080, đổi nếu bị conflict -->
+                            <cargo.servlet.port>8080</cargo.servlet.port>
+                            <cargo.logging>medium</cargo.logging>
+                        </properties>
+                    </configuration>
+                    <deployables>
+                        <deployable>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>${project.artifactId}</artifactId>
+                            <type>war</type>
+                            <!-- Trỏ thẳng vào thư mục webapp đã giải nén để Tomcat đọc được file tĩnh (.xhtml) -->
+                            <location>${project.build.directory}/${project.build.finalName}</location>
+                            <properties>
+                                <context>/lab08-jsf-validation</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

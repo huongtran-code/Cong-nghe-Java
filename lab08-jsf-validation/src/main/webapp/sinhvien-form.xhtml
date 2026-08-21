@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core">
+<!--
+    sinhvien-form.xhtml - Form thêm/sửa sinh viên JSF (Bài 3, 4, 9, 12).
+
+    Bài 3-4: h:form, h:inputText, h:commandButton, h:message, h:messages
+    Bài 9:   hiển thị banner "Đang sửa" khi editMode=true, nút Hủy
+    Bài 12:  trường Lớp dùng h:selectOneMenu thay vì inputText
+
+    Validation:
+      - Mã SV: required + @NotBlank + @Size(8-12)
+      - Họ tên: @NotBlank + @Size(min=5)
+      - Email:  @NotBlank + @Email
+      - Lớp:   required (selectOneMenu)
+-->
+<ui:composition template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Form Sinh Viên</ui:define>
+
+    <ui:define name="content">
+
+        <div class="page-header">
+            <h1>#{sinhVienBean.editMode ? '✏️ Sửa sinh viên' : '➕ Thêm sinh viên mới'}</h1>
+            <p>Nhập đầy đủ thông tin. Các trường có dấu <strong>*</strong> là bắt buộc.</p>
+        </div>
+
+        <!-- Thông báo thành công (globalOnly) -->
+        <h:messages globalOnly="true" styleClass="faces-messages"
+                    infoClass="msg-success" warnClass="msg-warning" errorClass="msg-error"
+                    showDetail="true"/>
+
+        <!-- Banner chế độ sửa (Bài 9) -->
+        <h:panelGroup rendered="#{sinhVienBean.editMode}" layout="block" styleClass="edit-banner">
+            ✏️ <strong>Chế độ sửa:</strong> Bạn đang chỉnh sửa sinh viên
+            <em>#{sinhVienBean.sinhVien.hoTen}</em>.
+            Sửa xong nhấn "Cập nhật" hoặc
+            <h:commandLink value="Hủy chỉnh sửa" action="#{sinhVienBean.cancelEdit}" styleClass="btn btn-secondary" style="display:inline;padding:4px 10px;font-size:0.82rem;"/>
+        </h:panelGroup>
+
+        <div class="card">
+            <div class="card-title">📝 Thông tin sinh viên</div>
+
+            <h:form id="svForm">
+                <div class="form-row">
+
+                    <!-- Mã sinh viên -->
+                    <div class="form-group">
+                        <label for="ma">Mã sinh viên *</label>
+                        <h:inputText id="ma"
+                                     value="#{sinhVienBean.sinhVien.maSinhVien}"
+                                     required="true"
+                                     requiredMessage="❗ Mã sinh viên bắt buộc nhập"
+                                     placeholder="Ví dụ: 20240001"/>
+                        <h:message for="ma" styleClass="error-msg"/>
+                    </div>
+
+                    <!-- Họ tên -->
+                    <div class="form-group">
+                        <label for="hoten">Họ và tên *</label>
+                        <h:inputText id="hoten"
+                                     value="#{sinhVienBean.sinhVien.hoTen}"
+                                     required="true"
+                                     requiredMessage="❗ Họ tên bắt buộc nhập"
+                                     placeholder="Ví dụ: Nguyễn Văn An"/>
+                        <h:message for="hoten" styleClass="error-msg"/>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <h:inputText id="email"
+                                     value="#{sinhVienBean.sinhVien.email}"
+                                     required="true"
+                                     requiredMessage="❗ Email bắt buộc nhập"
+                                     placeholder="Ví dụ: example@gmail.com"/>
+                        <h:message for="email" styleClass="error-msg"/>
+                    </div>
+
+                    <!--
+                        Bài 12: Trường Lớp dùng h:selectOneMenu thay vì h:inputText tự do.
+                        Người dùng chọn lớp từ danh sách có sẵn.
+                    -->
+                    <div class="form-group">
+                        <label for="lop">Lớp *</label>
+                        <h:selectOneMenu id="lop"
+                                         value="#{sinhVienBean.sinhVien.lop}"
+                                         required="true"
+                                         requiredMessage="❗ Vui lòng chọn lớp">
+                            <f:selectItem itemValue=""     itemLabel="-- Chọn lớp --" noSelectionOption="true"/>
+                            <f:selectItem itemValue="DCCNTT15.10.1" itemLabel="DCCNTT15.10.1"/>
+                            <f:selectItem itemValue="DCCNTT15.10.2" itemLabel="DCCNTT15.10.2"/>
+                            <f:selectItem itemValue="DCCNTT15.10.3" itemLabel="DCCNTT15.10.3"/>
+                            <f:selectItem itemValue="DCKTPM15.10.1" itemLabel="DCKTPM15.10.1"/>
+                            <f:selectItem itemValue="DCKTPM15.10.2" itemLabel="DCKTPM15.10.2"/>
+                            <f:selectItem itemValue="DCMMT15.10.1"  itemLabel="DCMMT15.10.1"/>
+                        </h:selectOneMenu>
+                        <h:message for="lop" styleClass="error-msg"/>
+                    </div>
+
+                </div>
+
+                <!-- Nút submit -->
+                <div style="margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap;">
+                    <h:commandButton
+                        value="#{sinhVienBean.editMode ? '💾 Cập nhật' : '💾 Lưu sinh viên'}"
+                        action="#{sinhVienBean.save}"
+                        styleClass="btn btn-primary"/>
+
+                    <h:commandButton value="🔄 Làm mới" immediate="true"
+                        action="#{sinhVienBean.cancelEdit}"
+                        rendered="#{!sinhVienBean.editMode}"
+                        styleClass="btn btn-secondary"/>
+                </div>
+            </h:form>
+        </div>
+
+        <!-- Link điều hướng -->
+        <p>
+            <h:link outcome="/sinhvien-list" value="← Quay lại danh sách sinh viên" styleClass="nav-link" style="color:var(--primary)"/>
+        </p>
+
+    </ui:define>
+</ui:composition>
+</html>

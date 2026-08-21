@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core">
+<!--
+    sanpham-form.xhtml - Form thêm sản phẩm JSF (Bài 7).
+
+    Validate:
+      - Tên sản phẩm: @NotBlank + @Size(2-200)
+      - Danh mục: @NotBlank (selectOneMenu)
+      - Giá: @NotNull + @DecimalMin(0.01)   → giá > 0
+      - Số lượng: @NotNull + @Min(0)         → số lượng >= 0
+-->
+<ui:composition template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Form Sản Phẩm</ui:define>
+
+    <ui:define name="content">
+
+        <div class="page-header">
+            <h1>🛒 Thêm sản phẩm</h1>
+            <p>Validate tên không rỗng, giá &gt; 0, số lượng &gt;= 0. Hiển thị lỗi/thành công bằng FacesMessage.</p>
+        </div>
+
+        <h:messages globalOnly="true" styleClass="faces-messages"
+                    infoClass="msg-success" warnClass="msg-warning" errorClass="msg-error"
+                    showDetail="true"/>
+
+        <!-- Form thêm sản phẩm -->
+        <div class="card">
+            <div class="card-title">📝 Thông tin sản phẩm</div>
+            <h:form id="spForm">
+                <div class="form-row">
+
+                    <div class="form-group">
+                        <label for="tenSP">Tên sản phẩm *</label>
+                        <h:inputText id="tenSP"
+                                     value="#{sanPhamBean.sanPham.tenSanPham}"
+                                     required="true"
+                                     requiredMessage="❗ Tên sản phẩm bắt buộc nhập"
+                                     placeholder="Ví dụ: Laptop Dell XPS 15"/>
+                        <h:message for="tenSP" styleClass="error-msg"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="danhMuc">Danh mục *</label>
+                        <h:selectOneMenu id="danhMuc"
+                                         value="#{sanPhamBean.sanPham.danhMuc}"
+                                         required="true"
+                                         requiredMessage="❗ Vui lòng chọn danh mục">
+                            <f:selectItem itemValue=""          itemLabel="-- Chọn danh mục --" noSelectionOption="true"/>
+                            <f:selectItem itemValue="Điện tử"   itemLabel="💻 Điện tử"/>
+                            <f:selectItem itemValue="Phụ kiện"  itemLabel="🖱 Phụ kiện"/>
+                            <f:selectItem itemValue="Văn phòng" itemLabel="📎 Văn phòng"/>
+                            <f:selectItem itemValue="Sách"      itemLabel="📚 Sách"/>
+                            <f:selectItem itemValue="Khác"      itemLabel="🗂 Khác"/>
+                        </h:selectOneMenu>
+                        <h:message for="danhMuc" styleClass="error-msg"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gia">Giá (VNĐ) * (phải &gt; 0)</label>
+                        <h:inputText id="gia"
+                                     value="#{sanPhamBean.sanPham.gia}"
+                                     required="true"
+                                     requiredMessage="❗ Giá bắt buộc nhập"
+                                     converterMessage="❗ Giá phải là số hợp lệ (ví dụ: 150000)"
+                                     placeholder="Ví dụ: 1500000">
+                            <f:convertNumber/>
+                        </h:inputText>
+                        <h:message for="gia" styleClass="error-msg"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="soLuong">Số lượng * (phải &gt;= 0)</label>
+                        <h:inputText id="soLuong"
+                                     value="#{sanPhamBean.sanPham.soLuong}"
+                                     required="true"
+                                     requiredMessage="❗ Số lượng bắt buộc nhập"
+                                     converterMessage="❗ Số lượng phải là số nguyên"
+                                     placeholder="Ví dụ: 50">
+                            <f:convertNumber integerOnly="true"/>
+                        </h:inputText>
+                        <h:message for="soLuong" styleClass="error-msg"/>
+                    </div>
+
+                </div>
+
+                <div style="margin-top: 24px;">
+                    <h:commandButton value="💾 Lưu sản phẩm" action="#{sanPhamBean.save}" styleClass="btn btn-primary"/>
+                </div>
+            </h:form>
+        </div>
+
+        <!-- Danh sách sản phẩm -->
+        <div class="card">
+            <div class="card-title">📋 Danh sách sản phẩm</div>
+            <h:form id="spListForm">
+                <h:dataTable value="#{sanPhamBean.dsSanPham}" var="sp" styleClass="data-table">
+                    <h:column><f:facet name="header">ID</f:facet><span class="badge">#{sp.id}</span></h:column>
+                    <h:column><f:facet name="header">Tên sản phẩm</f:facet><strong>#{sp.tenSanPham}</strong></h:column>
+                    <h:column><f:facet name="header">Danh mục</f:facet>#{sp.danhMuc}</h:column>
+                    <h:column>
+                        <f:facet name="header">Giá (VNĐ)</f:facet>
+                        <h:outputText value="#{sp.gia}">
+                            <f:convertNumber groupingUsed="true" maxFractionDigits="0"/>
+                        </h:outputText>
+                    </h:column>
+                    <h:column><f:facet name="header">Số lượng</f:facet>#{sp.soLuong}</h:column>
+                    <h:column>
+                        <f:facet name="header">Thao tác</f:facet>
+                        <h:commandButton value="🗑 Xóa"
+                                         action="#{sanPhamBean.delete(sp.id)}"
+                                         styleClass="btn btn-danger"
+                                         onclick="return confirm('Xóa sản phẩm này?')"/>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+        </div>
+
+        <p><h:link outcome="/index" value="← Về trang chủ" style="color:var(--primary)"/></p>
+
+    </ui:define>
+</ui:composition>
+</html>

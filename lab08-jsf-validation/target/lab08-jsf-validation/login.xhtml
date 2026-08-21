@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets">
+<!--
+    login.xhtml - Form đăng nhập JSF (Bài 8).
+
+    Logic trong LoginBean:
+      - Đúng tài khoản (admin/123456) → FacesMessage thành công + redirect index.xhtml
+      - Sai tài khoản → FacesMessage lỗi, ở lại trang login
+
+    Demo tài khoản: admin / 123456
+-->
+<ui:composition template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Đăng nhập</ui:define>
+
+    <ui:define name="content">
+
+        <div class="login-wrapper">
+            <div class="login-card">
+
+                <div class="login-icon">🔐</div>
+                <h1>Đăng nhập</h1>
+                <p class="login-sub">Lab 8 – Login Form JSF với FacesMessage</p>
+
+                <!-- Thông báo lỗi/thành công -->
+                <h:messages globalOnly="true" styleClass="faces-messages"
+                            infoClass="msg-success" errorClass="msg-error"
+                            showSummary="true" showDetail="true"/>
+
+                <h:form id="loginForm">
+                    <div class="form-row">
+
+                        <div class="form-group">
+                            <label for="username">Tài khoản</label>
+                            <h:inputText id="username"
+                                         value="#{loginBean.username}"
+                                         required="true"
+                                         requiredMessage="❗ Vui lòng nhập tài khoản"
+                                         placeholder="Nhập tài khoản (demo: admin)"/>
+                            <h:message for="username" styleClass="error-msg"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Mật khẩu</label>
+                            <h:inputSecret id="password"
+                                           value="#{loginBean.password}"
+                                           required="true"
+                                           requiredMessage="❗ Vui lòng nhập mật khẩu"
+                                           placeholder="Nhập mật khẩu (demo: 123456)"
+                                           redisplay="false"/>
+                            <h:message for="password" styleClass="error-msg"/>
+                        </div>
+
+                    </div>
+
+                    <h:commandButton value="🔓 Đăng nhập" action="#{loginBean.login}" styleClass="btn btn-primary"/>
+
+                </h:form>
+
+                <div style="margin-top:16px; text-align:center; font-size:0.8rem; color:var(--text-muted)">
+                    <p>Demo: <strong>admin</strong> / <strong>123456</strong></p>
+                    <h:link outcome="/index" value="← Về trang chủ" style="color:var(--primary)"/>
+                </div>
+
+            </div>
+        </div>
+
+    </ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core">
+<!--
+    sach-form.xhtml - Form thêm sách JSF (Bài 6).
+
+    Validate:
+      - Tên sách: @NotBlank + @Size(2-200)
+      - Tác giả:  @NotBlank + @Size(min=3)
+      - Năm xuất bản: @NotNull + @Min(1000) + @Max(2100) → dùng h:inputText với converter
+      - Nhà xuất bản: @NotBlank
+-->
+<ui:composition template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Form Sách</ui:define>
+
+    <ui:define name="content">
+
+        <div class="page-header">
+            <h1>📚 Thêm sách mới</h1>
+            <p>Validate tên sách, tác giả, năm xuất bản (1000–2100) và nhà xuất bản.</p>
+        </div>
+
+        <h:messages globalOnly="true" styleClass="faces-messages"
+                    infoClass="msg-success" warnClass="msg-warning" errorClass="msg-error"
+                    showDetail="true"/>
+
+        <!-- Form thêm sách -->
+        <div class="card">
+            <div class="card-title">📝 Thông tin sách</div>
+            <h:form id="sachForm">
+                <div class="form-row">
+
+                    <div class="form-group">
+                        <label for="tenSach">Tên sách *</label>
+                        <h:inputText id="tenSach"
+                                     value="#{sachBean.sach.tenSach}"
+                                     required="true"
+                                     requiredMessage="❗ Tên sách bắt buộc nhập"
+                                     placeholder="Ví dụ: Lập trình Java"/>
+                        <h:message for="tenSach" styleClass="error-msg"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tacGia">Tác giả *</label>
+                        <h:inputText id="tacGia"
+                                     value="#{sachBean.sach.tacGia}"
+                                     required="true"
+                                     requiredMessage="❗ Tên tác giả bắt buộc nhập"
+                                     placeholder="Ví dụ: Nguyễn Văn A"/>
+                        <h:message for="tacGia" styleClass="error-msg"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="namXuatBan">Năm xuất bản * (1000–2100)</label>
+                        <h:inputText id="namXuatBan"
+                                     value="#{sachBean.sach.namXuatBan}"
+                                     required="true"
+                                     requiredMessage="❗ Năm xuất bản bắt buộc nhập"
+                                     converterMessage="❗ Năm xuất bản phải là số nguyên"
+                                     placeholder="Ví dụ: 2020">
+                            <f:convertNumber integerOnly="true"/>
+                        </h:inputText>
+                        <h:message for="namXuatBan" styleClass="error-msg"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nxb">Nhà xuất bản *</label>
+                        <h:inputText id="nxb"
+                                     value="#{sachBean.sach.nhaXuatBan}"
+                                     required="true"
+                                     requiredMessage="❗ Nhà xuất bản bắt buộc nhập"
+                                     placeholder="Ví dụ: NXB Giáo Dục"/>
+                        <h:message for="nxb" styleClass="error-msg"/>
+                    </div>
+
+                </div>
+
+                <div style="margin-top: 24px;">
+                    <h:commandButton value="💾 Lưu sách" action="#{sachBean.save}" styleClass="btn btn-primary"/>
+                </div>
+            </h:form>
+        </div>
+
+        <!-- Danh sách sách hiện có -->
+        <div class="card">
+            <div class="card-title">📋 Danh sách sách</div>
+            <h:form id="sachListForm">
+                <h:dataTable value="#{sachBean.dsSach}" var="s" styleClass="data-table">
+                    <h:column><f:facet name="header">ID</f:facet><span class="badge">#{s.id}</span></h:column>
+                    <h:column><f:facet name="header">Tên sách</f:facet><strong>#{s.tenSach}</strong></h:column>
+                    <h:column><f:facet name="header">Tác giả</f:facet>#{s.tacGia}</h:column>
+                    <h:column><f:facet name="header">Năm XB</f:facet>#{s.namXuatBan}</h:column>
+                    <h:column><f:facet name="header">NXB</f:facet>#{s.nhaXuatBan}</h:column>
+                    <h:column>
+                        <f:facet name="header">Thao tác</f:facet>
+                        <h:commandButton value="🗑 Xóa"
+                                         action="#{sachBean.delete(s.id)}"
+                                         styleClass="btn btn-danger"
+                                         onclick="return confirm('Xóa sách này?')"/>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+        </div>
+
+        <p><h:link outcome="/index" value="← Về trang chủ" style="color:var(--primary)"/></p>
+
+    </ui:define>
+</ui:composition>
+</html>
