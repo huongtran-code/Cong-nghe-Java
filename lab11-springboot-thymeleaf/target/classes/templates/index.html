@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">Trang chủ - Lab 11</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <!-- Navigation Menu (Bài 7) -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a th:href="@{/}" class="brand-logo">
+                ⚡ <span>EAUT Java Tech</span>
+            </a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a th:href="@{/}" class="active">Trang chủ</a></li>
+                <li class="nav-item"><a th:href="@{/about}">Giới thiệu</a></li>
+                <li class="nav-item"><a th:href="@{/students}">Sinh viên</a></li>
+                <li class="nav-item"><a th:href="@{/courses}">Khóa học</a></li>
+                <li class="nav-item"><a th:href="@{/contact}">Liên hệ</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <div class="hero-card">
+            <h1 class="hero-title" th:text="${message}">Chào mừng đến với Spring Boot</h1>
+            <p class="hero-subtitle">Ứng dụng mẫu được xây dựng trong Bài Lab 11 - Chương 4: Phát triển ứng dụng với Spring Framework & Thymeleaf Template Engine.</p>
+            <div style="display: flex; gap: 1rem;">
+                <a th:href="@{/students}" class="btn btn-primary">👨‍🎓 Xem Danh sách Sinh viên</a>
+                <a th:href="@{/courses}" class="btn" style="background: var(--primary-light); color: var(--primary-color);">📚 Xem Danh sách Khóa học</a>
+            </div>
+        </div>
+
+        <h2 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--dark-bg);">Các chức năng chính</h2>
+        <div class="grid-cards">
+            <a th:href="@{/students}" class="feature-card">
+                <div class="feature-icon">👨‍🎓</div>
+                <h3 class="feature-title">Quản lý Sinh viên</h3>
+                <p class="feature-desc">Xem danh sách sinh viên, thông tin mã SV, họ tên, email và lớp học được render động qua Controller và Thymeleaf.</p>
+            </a>
+
+            <a th:href="@{/courses}" class="feature-card">
+                <div class="feature-icon">📚</div>
+                <h3 class="feature-title">Danh sách Khóa học</h3>
+                <p class="feature-desc">Quản lý và hiển thị thông tin 5 khóa học mẫu trong chương trình đào tạo ngành Công nghệ Thông tin.</p>
+            </a>
+
+            <a th:href="@{/about}" class="feature-card">
+                <div class="feature-icon">📖</div>
+                <h3 class="feature-title">Nội dung Chương 4</h3>
+                <p class="feature-desc">Tổng quan về Spring Framework, Spring Boot, Spring MVC, Thymeleaf Template Engine và Spring Data JPA.</p>
+            </a>
+
+            <a th:href="@{/contact}" class="feature-card">
+                <div class="feature-icon">📞</div>
+                <h3 class="feature-title">Thông tin Liên hệ</h3>
+                <p class="feature-desc">Thông tin liên lạc của Khoa Công nghệ Thông tin - Trường Đại học Công nghệ Đông Á.</p>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Học phần Công nghệ Java (IT3242) - Trường Đại học Công nghệ Đông Á</p>
+    </footer>
+
+</body>
+</html>

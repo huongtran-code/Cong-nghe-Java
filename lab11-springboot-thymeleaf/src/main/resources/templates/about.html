@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giới thiệu - Lab 11</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <!-- Navigation Menu (Bài 7) -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a th:href="@{/}" class="brand-logo">
+                ⚡ <span>EAUT Java Tech</span>
+            </a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a th:href="@{/}">Trang chủ</a></li>
+                <li class="nav-item"><a th:href="@{/about}" class="active">Giới thiệu</a></li>
+                <li class="nav-item"><a th:href="@{/students}">Sinh viên</a></li>
+                <li class="nav-item"><a th:href="@{/courses}">Khóa học</a></li>
+                <li class="nav-item"><a th:href="@{/contact}">Liên hệ</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <div class="hero-card">
+            <h1 class="hero-title" th:text="${course}">Công nghệ Java</h1>
+            <h3 style="color: var(--primary-color); margin-bottom: 1rem;" th:text="${chapter}">Chương 4 - Spring Framework</h3>
+            <p class="hero-subtitle" th:text="${description}">Mô tả môn học và bài lab.</p>
+        </div>
+
+        <div class="table-wrapper" style="padding: 2rem;">
+            <h3 style="font-size: 1.25rem; margin-bottom: 1.5rem; color: var(--dark-bg);">Mục tiêu bài lab 11</h3>
+            <ul style="list-style-type: none; display: flex; flex-direction: column; gap: 1rem;">
+                <li style="display: flex; align-items: center; gap: 0.75rem;">
+                    <span class="pill-tag pill-success">✓</span>
+                    <span>Tạo project Spring Boot bằng Spring Initializr hoặc Maven.</span>
+                </li>
+                <li style="display: flex; align-items: center; gap: 0.75rem;">
+                    <span class="pill-tag pill-success">✓</span>
+                    <span>Hiểu và nhận biết cấu trúc chuẩn của một dự án Spring Boot theo Maven.</span>
+                </li>
+                <li style="display: flex; align-items: center; gap: 0.75rem;">
+                    <span class="pill-tag pill-success">✓</span>
+                    <span>Viết Controller xử lý route và trả về View Thymeleaf.</span>
+                </li>
+                <li style="display: flex; align-items: center; gap: 0.75rem;">
+                    <span class="pill-tag pill-success">✓</span>
+                    <span>Truyền dữ liệu từ Controller sang View bằng đối tượng Model.</span>
+                </li>
+                <li style="display: flex; align-items: center; gap: 0.75rem;">
+                    <span class="pill-tag pill-success">✓</span>
+                    <span>Sử dụng cú pháp Thymeleaf (`th:text`, `th:href`, `th:each`) để render dữ liệu động.</span>
+                </li>
+            </ul>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Học phần Công nghệ Java (IT3242) - Trường Đại học Công nghệ Đông Á</p>
+    </footer>
+
+</body>
+</html>

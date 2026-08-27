@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách Sinh viên - Lab 11</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <!-- Navigation Menu (Bài 7) -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a th:href="@{/}" class="brand-logo">
+                ⚡ <span>EAUT Java Tech</span>
+            </a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a th:href="@{/}">Trang chủ</a></li>
+                <li class="nav-item"><a th:href="@{/about}">Giới thiệu</a></li>
+                <li class="nav-item"><a th:href="@{/students}" class="active">Sinh viên</a></li>
+                <li class="nav-item"><a th:href="@{/courses}">Khóa học</a></li>
+                <li class="nav-item"><a th:href="@{/contact}">Liên hệ</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <div class="table-wrapper">
+            <div class="table-header-bar">
+                <div class="table-title">👨‍🎓 Danh sách Sinh viên</div>
+                <div class="badge-count" th:text="${'Tổng số: ' + totalStudents + ' sinh viên'}">Tổng số: 5 sinh viên</div>
+            </div>
+            
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã SV</th>
+                        <th>Họ và Tên</th>
+                        <th>Email</th>
+                        <th>Lớp học</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="s, stat : ${students}">
+                        <td th:text="${stat.count}">1</td>
+                        <td>
+                            <strong style="color: var(--primary-color);" th:text="${s.studentCode}">SV001</strong>
+                        </td>
+                        <td th:text="${s.fullName}">Nguyễn Văn An</td>
+                        <td>
+                            <a th:href="'mailto:' + ${s.email}" style="color: var(--secondary-color); text-decoration: none;" th:text="${s.email}">an@eaut.edu.vn</a>
+                        </td>
+                        <td>
+                            <span class="pill-tag pill-primary" th:text="${s.className}">DCCNTT13.10.1</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Học phần Công nghệ Java (IT3242) - Trường Đại học Công nghệ Đông Á</p>
+    </footer>
+
+</body>
+</html>

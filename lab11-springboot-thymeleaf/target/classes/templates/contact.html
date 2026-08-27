@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên hệ - Lab 11</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <!-- Navigation Menu (Bài 7) -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a th:href="@{/}" class="brand-logo">
+                ⚡ <span>EAUT Java Tech</span>
+            </a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a th:href="@{/}">Trang chủ</a></li>
+                <li class="nav-item"><a th:href="@{/about}">Giới thiệu</a></li>
+                <li class="nav-item"><a th:href="@{/students}">Sinh viên</a></li>
+                <li class="nav-item"><a th:href="@{/courses}">Khóa học</a></li>
+                <li class="nav-item"><a th:href="@{/contact}" class="active">Liên hệ</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <div class="hero-card">
+            <h1 class="hero-title">Thông tin Liên hệ</h1>
+            <p class="hero-subtitle" th:text="${department}">Khoa Công nghệ Thông tin - Trường Đại học Công nghệ Đông Á</p>
+        </div>
+
+        <div class="contact-grid">
+            <div class="info-item">
+                <div class="info-icon">📍</div>
+                <div class="info-content">
+                    <h4>Địa chỉ</h4>
+                    <p th:text="${address}">Tòa nhà Polyco, Đường Trịnh Văn Bô, Nam Từ Liêm, Hà Nội</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-icon">📞</div>
+                <div class="info-content">
+                    <h4>Điện thoại</h4>
+                    <p th:text="${phone}">024.6262.7796</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-icon">✉️</div>
+                <div class="info-content">
+                    <h4>Email</h4>
+                    <p th:text="${email}">cntt@eaut.edu.vn</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-icon">🕒</div>
+                <div class="info-content">
+                    <h4>Giờ làm việc</h4>
+                    <p th:text="${workingHours}">Thứ 2 - Thứ 6: 08:00 - 17:00</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Học phần Công nghệ Java (IT3242) - Trường Đại học Công nghệ Đông Á</p>
+    </footer>
+
+</body>
+</html>
