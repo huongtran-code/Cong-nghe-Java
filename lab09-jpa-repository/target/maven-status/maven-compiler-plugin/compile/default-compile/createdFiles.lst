@@ -2,6 +2,7 @@ vn\edu\eaut\lab9\model\Diem.class
 vn\edu\eaut\lab9\config\JPAUtil.class
 vn\edu\eaut\lab9\repository\BaseRepository.class
 vn\edu\eaut\lab9\repository\SinhVienRepository.class
+META-INF\persistence.xml
 vn\edu\eaut\lab9\config\DataInitializer.class
 vn\edu\eaut\lab9\controller\LopHocController.class
 vn\edu\eaut\lab9\repository\LopHocRepository.class
